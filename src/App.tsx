@@ -2,7 +2,6 @@ import { IonApp, IonRouterOutlet, IonSplitPane } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { Redirect, Route } from 'react-router-dom';
 import Menu from './components/Menu';
-import Page from './pages/Page';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -22,6 +21,10 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import InicioPage from './pages/InicioPage';
+import VisitantePage from './pages/VisitantePage';
+import ChequeoPage from './pages/ChequeoPage';
+import VisitasPage from './pages/VisitasPage';
 
 const App: React.FC = () => {
   return (
@@ -31,10 +34,19 @@ const App: React.FC = () => {
           <Menu />
           <IonRouterOutlet id="main">
             <Route path="/" exact={true}>
-              <Redirect to="/page/Inbox" />
+              <Redirect to="/inicio" />
             </Route>
-            <Route path="/page/:name" exact={true}>
-              <Page />
+            <Route path="/inicio" exact={true}>
+              <InicioPage />
+            </Route>
+            <Route path="/visitante" exact={true}>
+              <VisitantePage />
+            </Route>
+            <Route path="/chequeo" exact={true}>
+              <ChequeoPage />
+            </Route>
+            <Route path="/visitas" exact={true}>
+              <VisitasPage />
             </Route>
           </IonRouterOutlet>
         </IonSplitPane>
