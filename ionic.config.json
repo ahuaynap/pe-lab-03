@@ -1,0 +1,7 @@
+{
+  "name": "pe-lab-03",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
