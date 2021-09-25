@@ -10,7 +10,7 @@ const VisitantePage: React.FC = ({}) => {
                 <IonButtons slot="start">
                     <IonMenuButton />
                 </IonButtons>
-                <IonTitle>Visitantes</IonTitle>
+                <IonTitle>Registro de Visitantes</IonTitle>
                 </IonToolbar>
             </IonHeader>
 

@@ -13,13 +13,7 @@ import {
 import { useLocation } from 'react-router-dom';
 import { home, homeOutline, personAdd, personAddOutline, fitness, fitnessOutline, reader, readerOutline } from 'ionicons/icons';
 import './Menu.css';
-
-interface AppPage {
-  url: string;
-  iosIcon: string;
-  mdIcon: string;
-  title: string;
-}
+import { AppPage } from '../interfaces/interfaces';
 
 const appPages: AppPage[] = [
   {
