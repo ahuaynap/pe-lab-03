@@ -1,12 +1,19 @@
 import { IonButton, IonInput, IonItem, IonLabel, IonList, IonListHeader } from "@ionic/react";
 import React, { useState } from "react";
+import { Visita } from "../interfaces/interfaces";
+import { Storage }  from '@ionic/storage';
 
-
-const ChequeoForm: React.FC = () => {
+const ChequeoForm: React.FC<Visita> = (visita) => {
     const [peso, setPeso] = useState<number | null>(null);
     const [temperatura, setTemperatura] = useState<number | null>(null);
     const [presion, setPresion] = useState<number | null>(null);
     const [saturacion, setSaturacion] = useState<number | null>(null);
+    
+    const store = new Storage();
+
+    const addVisita = async () => {
+        
+    }
 
     return (
         <div className="">
@@ -42,10 +49,12 @@ const ChequeoForm: React.FC = () => {
                         placeholder="60"
                         onIonChange={saturacion => setSaturacion(parseInt(saturacion.detail.value!))}></IonInput>
                 </IonItem>
-                <IonItem>
-                    <IonButton expand="full">Enviar</IonButton>
-                </IonItem>
             </IonList>
+            <IonButton
+                onClick={addVisita}
+                expand="full">
+                    Enviar
+            </IonButton>
         </div>
     );
 };

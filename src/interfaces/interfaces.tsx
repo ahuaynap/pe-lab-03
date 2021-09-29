@@ -1,4 +1,4 @@
-export interface Visitante {
+export interface Visita {
     id: number;
     nombres: string;
     apellidos: string;
@@ -7,17 +7,12 @@ export interface Visitante {
     direccion: string;
     latitud: number;
     longitud: number;
-    ts: Date;
-}
-
-export interface Chequeo {
-    id: number;
-    visitante_id: number;
-    peso: number;
-    temperatura: number;
-    presion: number;
-    saturacion: number;
-    ts: Date;
+    ts_registro: Date;
+    peso?: number;
+    temperatura?: number;
+    presion?: number;
+    saturacion?: number;
+    ts_chequeo?: Date;
 }
 
 export interface AppPage {
@@ -25,5 +20,10 @@ export interface AppPage {
     iosIcon: string;
     mdIcon: string;
     title: string;
+}
+
+export interface LocationError {
+    showError: boolean;
+    message?: string;
 }
   

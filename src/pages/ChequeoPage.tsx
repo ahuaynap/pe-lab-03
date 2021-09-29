@@ -20,7 +20,6 @@ const ChequeoPage: React.FC = () => {
                     <IonTitle size="large">Chequeo</IonTitle>
                 </IonToolbar>
                 </IonHeader>
-                <ChequeoForm />
             </IonContent>
         </IonPage>
     );
