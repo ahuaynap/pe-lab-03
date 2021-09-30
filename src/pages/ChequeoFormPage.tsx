@@ -1,9 +1,10 @@
 import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import ChequeoForm from '../components/ChequeoForm';
 import VisitantesList from '../components/VistantesList';
+import { ChequeoProps } from '../interfaces/interfaces';
 import './Page.css';
 
-const ChequeoPage: React.FC = () => {
+const ChequeoFormPage: React.FC<ChequeoProps> = ({match}) => {
     return (
         <IonPage>
             <IonHeader>
@@ -20,10 +21,10 @@ const ChequeoPage: React.FC = () => {
                     <IonTitle size="large">Chequeo</IonTitle>
                 </IonToolbar>
                 </IonHeader>
-                <VisitantesList />
+                <ChequeoForm id={match.params.id}/>
             </IonContent>
         </IonPage>
     );
 }
 
-export default ChequeoPage;
+export default ChequeoFormPage;

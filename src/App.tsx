@@ -25,6 +25,7 @@ import InicioPage from './pages/InicioPage';
 import VisitantePage from './pages/VisitantePage';
 import ChequeoPage from './pages/ChequeoPage';
 import VisitasPage from './pages/VisitasPage';
+import ChequeoFormPage from './pages/ChequeoFormPage';
 
 const App: React.FC = () => {
   return (
@@ -44,6 +45,8 @@ const App: React.FC = () => {
             </Route>
             <Route path="/chequeo" exact={true}>
               <ChequeoPage />
+            </Route>
+            <Route path="/chequeo/:id" exact={true} component={ChequeoFormPage}>
             </Route>
             <Route path="/visitas" exact={true}>
               <VisitasPage />

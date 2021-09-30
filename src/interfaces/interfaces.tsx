@@ -1,18 +1,20 @@
+import { RouteComponentProps } from "react-router";
+
 export interface Visita {
-    id: number;
+    id?: string;
     nombres: string;
     apellidos: string;
-    fecha_nacimiento: Date;
+    fecha_nacimiento: string;
     estatura: number;
     direccion: string;
     latitud: number;
     longitud: number;
-    ts_registro: Date;
+    fecha_registro: string;
     peso?: number;
     temperatura?: number;
     presion?: number;
     saturacion?: number;
-    ts_chequeo?: Date;
+    fecha_chequeo?: string;
 }
 
 export interface AppPage {
@@ -22,8 +24,12 @@ export interface AppPage {
     title: string;
 }
 
-export interface LocationError {
-    showError: boolean;
-    message?: string;
+export interface ToastController {
+    show: boolean;
+    message: string;
 }
+
+export interface ChequeoProps extends RouteComponentProps<{
+    id: string;
+}> {}
   

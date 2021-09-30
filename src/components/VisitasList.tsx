@@ -1,31 +1,34 @@
 import { Visita } from "../interfaces/interfaces";
-import { useIonViewWillEnter } from '@ionic/react'
-import { Storage } from '@ionic/storage';
+import { useIonViewDidEnter } from '@ionic/react'
 import { useState } from "react";
+import app from "../Firebase";
+import * as firebase from 'firebase/database';
 
 const VisitasList: React.FC = ({}) => {
 
     const [visitas, setVisitas] = useState<Visita[]>([]);
+    const db = firebase.getDatabase(app);
 
-    const vst: Visita[] = [];
-
-    const getVisitas = async () => {
-        const store = new Storage();
-        await store.create();
-
-        const keys = await store.keys();
-        keys.map(async (key) => {
-            const value = await store.get(key);
-            const visita = JSON.parse(value) as Visita;
-            if (!visita.ts_chequeo) {
-                vst.push(visita)
-            }    
+    const getVisitas = () => {
+        const ref = firebase.ref(db, 'visitas');
+        firebase.onValue(ref, (snapshot: firebase.DataSnapshot) => {
+            setVisitas(transformData(snapshot));
         });
-        setVisitas(vst);
-        console.log(visitas);
     }
 
-    useIonViewWillEnter(() => {
+    const transformData = (snapshot: firebase.DataSnapshot) => {
+        const data: Visita[] = []
+        snapshot.forEach((snapshot) => {
+            let visita = snapshot.val() as Visita;
+            visita.id = snapshot.key!
+            if(visita.fecha_chequeo){
+                data.push(visita);
+            }
+        });
+        return data;
+    }
+
+    useIonViewDidEnter(() => {
         getVisitas();
     });
 

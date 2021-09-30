@@ -1,46 +1,48 @@
 import { IonButton, IonDatetime, IonInput, IonItem, IonLabel, IonList, IonListHeader, IonLoading, IonToast } from "@ionic/react";
 import React, { useState } from "react";
 import { Geolocation, Geoposition } from '@ionic-native/geolocation';
-import { LocationError, Visita } from "../interfaces/interfaces";
-import { Storage } from '@ionic/storage';
+import { ToastController, Visita } from "../interfaces/interfaces";
+import app from "../Firebase";
+import * as firebase from 'firebase/database';
+import { useHistory } from "react-router";
 
 const VisitanteForm: React.FC = () => {
     const [nombres, setNombres] = useState<string | null>(null);
     const [apellidos, setApellidos] = useState<string | null>(null);
-    const [fechaNacimiento, setFechaNacimiento] = useState<string>("1995-02-03");
+    const [fechaNacimiento, setFechaNacimiento] = useState<string>("1995/2/02");
     const [estatura, setEstatura] = useState<string | null>(null);
     const [direccion, setDireccion] = useState<string | null>(null);
+
     const [loading, setLoading] = useState<boolean>(false);
-    const [error, setError] = useState<LocationError>({showError: false});
+    const [toast, setToast] = useState<ToastController>({show: false, message: ""});
+
+    const db = firebase.getDatabase(app);
 
     const addVisitante = async () => {
         setLoading(true);
-        const store = new Storage();
         try {
             const position: Geoposition = await Geolocation.getCurrentPosition();
-
-            await store.create();
-            const id = (await store.keys()).length + 1;
+            const dbref = firebase.ref(db, "visitas/");
             let visita: Visita = {
-                id: id,
                 nombres: nombres!,
                 apellidos: apellidos!,
-                fecha_nacimiento: new Date(fechaNacimiento!),
+                fecha_nacimiento: (new Date(fechaNacimiento)).toLocaleDateString(),
                 estatura: parseFloat(estatura!),
                 direccion: direccion!,
                 latitud: position.coords.latitude,
                 longitud: position.coords.longitude,
-                ts_registro: new Date()
+                fecha_registro: (new Date()).toLocaleString()
             }
-            await store.set("" + id, JSON.stringify(visita));
-
-            setLoading(false);
-            setError({showError: false, message: undefined});
+            firebase.push(dbref, visita);
+            //cleanForm();
+            setToast({show: true, message: "Vistante agregado"});
+            
         } catch(e: any) {
-            const message = e.message.length > 0 ? e.message : "Cannot get user location. Check Permission";
-            setError({showError: true, message});
-            setLoading(false);
+            setToast({show: true, message: "Cannot get user location. Check Permission"});
         }
+
+        setLoading(false);
+        //useHistory().push("/chequeo");
     }
 
 
@@ -52,9 +54,9 @@ const VisitanteForm: React.FC = () => {
                 onDidDismiss={() => setLoading(false)}
             />
             <IonToast
-                isOpen={error.showError}
-                message={error.message}
-                onDidDismiss={() => setError({showError: false, message: undefined})}
+                isOpen={toast.show}
+                message={toast.message}
+                onDidDismiss={() => setToast({show: false, message: ""})}
                 duration={3000}
             />
             <IonList lines="full">
