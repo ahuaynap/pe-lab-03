@@ -1,5 +1,5 @@
 import { Visita } from "../interfaces/interfaces";
-import { useIonViewDidEnter } from '@ionic/react'
+import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonItem, IonLabel, IonList, useIonViewDidEnter } from '@ionic/react'
 import { useState } from "react";
 import app from "../Firebase";
 import * as firebase from 'firebase/database';
@@ -36,15 +36,48 @@ const VisitasList: React.FC = ({}) => {
         <div>
             {visitas.map(visita => {
                 return (
-                    <div key={visita.id}>
-                        <p>{visita.nombres + " " +visita.apellidos}</p>
-                        <p>{visita.direccion}</p>
-                        <p>{visita.estatura}</p>
-                        <p>{visita.peso}</p>
-                        <p>{visita.presion}</p>
-                        <p>{visita.saturacion}</p>
-                        <p>{visita.temperatura}</p>
-                    </div>
+                    <IonCard
+                        key={visita.id}
+                        routerLink={"/chequeo/" + visita.id}>
+                        <IonCardHeader>
+                            <IonCardTitle>{visita.nombres + " " + visita.apellidos}</IonCardTitle>
+                            <IonCardSubtitle>
+                                {visita.direccion}
+                            </IonCardSubtitle>
+                        </IonCardHeader>
+                        <IonCardContent>
+                            <IonList>
+                                <IonItem>
+                                    <IonLabel>Fecha de nacimiento</IonLabel>
+                                    <IonLabel>{visita.fecha_nacimiento}</IonLabel>
+                                </IonItem>
+                                <IonItem>
+                                    <IonLabel>Estatura</IonLabel>
+                                    <IonLabel>{visita.estatura}</IonLabel>
+                                </IonItem>
+                                <IonItem>
+                                    <IonLabel>Peso</IonLabel>
+                                    <IonLabel>{visita.peso}</IonLabel>
+                                </IonItem>
+                                <IonItem>
+                                    <IonLabel>Temperatura</IonLabel>
+                                    <IonLabel>{visita.temperatura}</IonLabel>
+                                </IonItem>
+                                <IonItem>
+                                    <IonLabel>Presion</IonLabel>
+                                    <IonLabel>{visita.presion}</IonLabel>
+                                </IonItem>
+                                <IonItem>
+                                    <IonLabel>Nivel de saturacion</IonLabel>
+                                    <IonLabel>{visita.saturacion}</IonLabel>
+                                </IonItem>
+                                <IonItem>
+                                    <IonLabel>Fecha de chequeo</IonLabel>
+                                    <IonLabel>{visita.fecha_chequeo}</IonLabel>
+                                </IonItem>
+                            </IonList>
+                        </IonCardContent>
+                    </IonCard>
                 );
             })}
         </div>
